@@ -1,22 +1,15 @@
 import Player from 'react-player'
-import { useAppSelector } from '../store'
 import { useDispatch } from 'react-redux'
 import { next } from '../store/slices/player'
 import { NextVideoToast } from './NextVideoToast'
 import { useState } from 'react'
+import { useCurrentCourse } from '../hooks/useCurrentCourse'
 
 export function VideoPlayer() {
   const dispatch = useDispatch()
   const [showToast, setShowToast] = useState(false)
 
-  const video = useAppSelector((state) => {
-    const { currentModuleIdx, currentLessonIdx } = state.player
-
-    const currentLesson =
-      state.player.course.modules[currentModuleIdx].lessons[currentLessonIdx]
-
-    return currentLesson
-  })
+  const { currentLesson: video } = useCurrentCourse()
 
   function handlePlayNextVideo() {
     setShowToast(true)
