@@ -1,6 +1,10 @@
 import { ChevronDown } from 'lucide-react'
 import { Lesson } from './Lesson'
 
+import * as Collapsible from '@radix-ui/react-collapsible'
+import { play } from '../store/slices/player'
+import { useCourse } from '../hooks/useCourse'
+
 interface ICourseModuleProps {
   title: string
   lessonsAmount: number
@@ -12,9 +16,23 @@ export function CourseModule({
   lessonsAmount,
   moduleIndex,
 }: ICourseModuleProps) {
+  const {
+    lessons,
+    currentLessonIdx,
+    currentModuleIdx,
+    isOpen,
+    setIsOpen,
+    dispatch,
+  } = useCourse(moduleIndex)
+
   return (
-    <div className="">
-      <button className="flex w-full items-center gap-3 bg-zinc-700 p-4">
+    <Collapsible.Root
+      className="group"
+      defaultOpen={moduleIndex === 0}
+      open={isOpen}
+      onOpenChange={setIsOpen}
+    >
+      <Collapsible.Trigger className="flex w-full items-center gap-3 bg-zinc-700 p-4">
         <div className="flex h-10 w-10 items-center justify-center rounded-full bg-zinc-900 text-xs">
           {moduleIndex + 1}
         </div>
@@ -22,15 +40,26 @@ export function CourseModule({
           <strong className="text-sm">{title}</strong>
           <span className="text-xs text-zinc-400">{lessonsAmount} lessons</span>
         </div>
-        <ChevronDown className="ml-auto h-5 w-5 text-zinc-400" />
-      </button>
-
-      <nav className="relative flex flex-col gap-4 p-6">
-        <Lesson title="Redux Fundamentals" duration="16:32" />
-        <Lesson title="Redux Fundamentals part 2" duration="14:36" />
-        <Lesson title="Reducers" duration="10:44" />
-        <Lesson title="Actions" duration="12:27" />
-      </nav>
-    </div>
+        <ChevronDown className="ml-auto h-5 w-5 text-zinc-400 transition-transform group-data-[state=open]:rotate-180" />
+      </Collapsible.Trigger>
+      <Collapsible.Content className="CollapsibleContent">
+        <nav className="relative flex flex-col gap-4 p-6">
+          {lessons.map((lesson, lessonIndex) => {
+            const isCurrent =
+              currentModuleIdx === moduleIndex &&
+              currentLessonIdx === lessonIndex
+            return (
+              <Lesson
+                key={crypto.randomUUID()}
+                title={lesson.title}
+                duration={lesson.duration}
+                onPlay={() => dispatch(play([moduleIndex, lessonIndex]))}
+                isCurrent={isCurrent}
+              />
+            )
+          })}
+        </nav>
+      </Collapsible.Content>
+    </Collapsible.Root>
   )
 }
