@@ -3,8 +3,13 @@ import { MessageCircle } from 'lucide-react'
 import { Header } from '../components/Header'
 import { VideoPlayer } from '../components/VideoPlayer'
 import { CourseModule } from '../components/CourseModule'
+import { useAppSelector } from '../store'
 
 export function Player() {
+  const modules = useAppSelector((state) => {
+    return state.player.course.modules
+  })
+
   return (
     <div className="flex h-screen items-center justify-center bg-zinc-900 text-zinc-50">
       <div className="w-main-container flex flex-col gap-6">
@@ -23,21 +28,16 @@ export function Player() {
             <VideoPlayer />
           </div>
           <aside className="scrollbar-thin scrollbar-track-zinc-950 scrollbar-thumb-zinc-700 absolute bottom-0 right-0 top-0 w-80 divide-y-2 divide-zinc-900 overflow-y-scroll border-l border-zinc-700 bg-zinc-800">
-            <CourseModule
-              title="Unveiling Redux"
-              moduleIndex={0}
-              lessonsAmount={4}
-            />
-            <CourseModule
-              title="Redux Toolkit"
-              moduleIndex={1}
-              lessonsAmount={4}
-            />
-            <CourseModule
-              title="Redux Sagas"
-              moduleIndex={2}
-              lessonsAmount={4}
-            />
+            {modules.map((module, index) => {
+              return (
+                <CourseModule
+                  key={crypto.randomUUID()}
+                  title={module.title}
+                  moduleIndex={index}
+                  lessonsAmount={module.lessons.length}
+                />
+              )
+            })}
           </aside>
         </main>
       </div>
