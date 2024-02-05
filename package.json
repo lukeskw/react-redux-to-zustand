@@ -8,12 +8,14 @@
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
     "test": "vitest run",
-    "test:watch": "vitest"
+    "test:watch": "vitest",
+    "server": "json-server server.json -w -d 1000"
   },
   "dependencies": {
     "@radix-ui/react-collapsible": "^1.0.3",
     "@radix-ui/react-toast": "^1.1.5",
     "@reduxjs/toolkit": "^2.1.0",
+    "axios": "^1.6.7",
     "lucide-react": "^0.321.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
@@ -32,6 +34,7 @@
     "eslint-config-react": "^1.1.7",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.5",
+    "json-server": "v0.17.4",
     "postcss": "^8.4.33",
     "prettier-plugin-tailwindcss": "^0.5.11",
     "tailwind-scrollbar": "^3.0.5",
