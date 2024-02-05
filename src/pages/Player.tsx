@@ -1,4 +1,4 @@
-import { MessageCircle } from 'lucide-react'
+import { Loader2, MessageCircle } from 'lucide-react'
 
 import { Header } from '../components/Header'
 import { VideoPlayer } from '../components/VideoPlayer'
@@ -6,20 +6,23 @@ import { CourseModule } from '../components/CourseModule'
 import { useAppSelector } from '../store'
 import { useCurrentCourse } from '../hooks/useCurrentCourse'
 import { useEffect } from 'react'
-import { api } from '../lib/axios'
+import { loadCourseData } from '../store/slices/player'
 
 export function Player() {
-  const modules = useAppSelector((state) => {
-    return state.player.course?.modules
+  const { modules, isCourseLoading } = useAppSelector((state) => {
+    const modules = state.player.course?.modules
+    const isCourseLoading = state.player.isPending
+    return {
+      modules,
+      isCourseLoading,
+    }
   })
 
-  const { currentLesson } = useCurrentCourse()
+  const { currentLesson, appDispatch } = useCurrentCourse()
 
   useEffect(() => {
-    api.get('/courses/1').then((response) => {
-      console.log(response.data)
-    })
-  }, [])
+    appDispatch(loadCourseData())
+  }, [appDispatch])
 
   useEffect(() => {
     if (currentLesson) {
@@ -29,7 +32,7 @@ export function Player() {
 
   return (
     <div className="flex h-screen items-center justify-center bg-zinc-900 text-zinc-50">
-      <div className="w-main-container flex flex-col gap-6">
+      <div className="flex w-main-container flex-col gap-6">
         <div className="flex items-center justify-between">
           <Header />
           <button
@@ -44,8 +47,8 @@ export function Player() {
           <div className="flex-1">
             <VideoPlayer />
           </div>
-          <aside className="scrollbar-thin scrollbar-track-zinc-950 scrollbar-thumb-zinc-700 absolute bottom-0 right-0 top-0 w-80 divide-y-2 divide-zinc-900 overflow-y-scroll border-l border-zinc-700 bg-zinc-800">
-            {modules &&
+          <aside className="absolute bottom-0 right-0 top-0 w-80 divide-y-2 divide-zinc-900 overflow-y-scroll border-l border-zinc-700 bg-zinc-800 scrollbar-thin scrollbar-track-zinc-950 scrollbar-thumb-zinc-700">
+            {modules && !isCourseLoading ? (
               modules.map((module, index) => {
                 return (
                   <CourseModule
@@ -55,7 +58,12 @@ export function Player() {
                     lessonsAmount={module.lessons.length}
                   />
                 )
-              })}
+              })
+            ) : (
+              <div className="flex h-full w-full items-center justify-center">
+                <Loader2 className="h-6 w-6 animate-spin text-zinc-400" />
+              </div>
+            )}
           </aside>
         </main>
       </div>

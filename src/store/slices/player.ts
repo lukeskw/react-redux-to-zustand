@@ -1,29 +1,24 @@
-import { PayloadAction, createSlice } from '@reduxjs/toolkit'
-
-interface Course {
-  id: number
-  modules: Array<{
-    id: number
-    title: string
-    lessons: Array<{
-      id: string
-      title: string
-      duration: string
-    }>
-  }>
-}
-
-interface PlayerState {
-  course: Course | null
-  currentModuleIdx: number
-  currentLessonIdx: number
-}
+import {
+  PayloadAction,
+  createSlice,
+  createAsyncThunk,
+  isPending,
+} from '@reduxjs/toolkit'
+import { PlayerState } from '../../interfaces/IPlayerState'
+import { api } from '../../lib/axios'
 
 const initialState: PlayerState = {
   course: null,
   currentModuleIdx: 0,
   currentLessonIdx: 0,
+  isPending: true,
 }
+
+export const loadCourseData = createAsyncThunk('player/load', async () => {
+  const response = await api.get('/courses/1')
+
+  return response.data
+})
 
 export const playerSlice = createSlice({
   name: 'player',
@@ -50,6 +45,16 @@ export const playerSlice = createSlice({
         state.currentLessonIdx = 0
       }
     },
+  },
+  extraReducers(builder) {
+    builder.addCase(loadCourseData.pending, (state) => {
+      state.isPending = true
+    })
+
+    builder.addCase(loadCourseData.fulfilled, (state, action) => {
+      state.course = action.payload
+      state.isPending = false
+    })
   },
 })
 

@@ -1,17 +1,15 @@
 import { useState, useEffect } from 'react'
-import { useDispatch } from 'react-redux'
-import { useAppSelector } from '../store'
+import { useAppDispatch, useAppSelector } from '../store'
 
 export function useCourse(moduleIndex: number) {
-  const dispatch = useDispatch()
+  const appDispatch = useAppDispatch()
 
-  const { lessons, currentLessonIdx, currentModuleIdx } = useAppSelector(
-    (state) => {
-      const { currentLessonIdx, currentModuleIdx } = state.player
+  const { lessons, currentLessonIdx, currentModuleIdx, isPending } =
+    useAppSelector((state) => {
+      const { currentLessonIdx, currentModuleIdx, isPending } = state.player
       const lessons = state.player.course?.modules[moduleIndex].lessons
-      return { lessons, currentLessonIdx, currentModuleIdx }
-    },
-  )
+      return { lessons, currentLessonIdx, currentModuleIdx, isPending }
+    })
 
   const [isOpen, setIsOpen] = useState(moduleIndex === currentModuleIdx)
 
@@ -25,6 +23,7 @@ export function useCourse(moduleIndex: number) {
     currentModuleIdx,
     isOpen,
     setIsOpen,
-    dispatch,
+    appDispatch,
+    isPending,
   }
 }
