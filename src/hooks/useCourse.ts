@@ -8,7 +8,7 @@ export function useCourse(moduleIndex: number) {
   const { lessons, currentLessonIdx, currentModuleIdx } = useAppSelector(
     (state) => {
       const { currentLessonIdx, currentModuleIdx } = state.player
-      const lessons = state.player.course.modules[moduleIndex].lessons
+      const lessons = state.player.course?.modules[moduleIndex].lessons
       return { lessons, currentLessonIdx, currentModuleIdx }
     },
   )

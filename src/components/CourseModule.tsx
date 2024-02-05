@@ -44,20 +44,21 @@ export function CourseModule({
       </Collapsible.Trigger>
       <Collapsible.Content className="CollapsibleContent">
         <nav className="relative flex flex-col gap-4 p-6">
-          {lessons.map((lesson, lessonIndex) => {
-            const isCurrent =
-              currentModuleIdx === moduleIndex &&
-              currentLessonIdx === lessonIndex
-            return (
-              <Lesson
-                key={crypto.randomUUID()}
-                title={lesson.title}
-                duration={lesson.duration}
-                onPlay={() => dispatch(play([moduleIndex, lessonIndex]))}
-                isCurrent={isCurrent}
-              />
-            )
-          })}
+          {lessons &&
+            lessons.map((lesson, lessonIndex) => {
+              const isCurrent =
+                currentModuleIdx === moduleIndex &&
+                currentLessonIdx === lessonIndex
+              return (
+                <Lesson
+                  key={crypto.randomUUID()}
+                  title={lesson.title}
+                  duration={lesson.duration}
+                  onPlay={() => dispatch(play([moduleIndex, lessonIndex]))}
+                  isCurrent={isCurrent}
+                />
+              )
+            })}
         </nav>
       </Collapsible.Content>
     </Collapsible.Root>

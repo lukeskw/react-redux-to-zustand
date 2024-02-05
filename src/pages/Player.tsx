@@ -6,16 +6,25 @@ import { CourseModule } from '../components/CourseModule'
 import { useAppSelector } from '../store'
 import { useCurrentCourse } from '../hooks/useCurrentCourse'
 import { useEffect } from 'react'
+import { api } from '../lib/axios'
 
 export function Player() {
   const modules = useAppSelector((state) => {
-    return state.player.course.modules
+    return state.player.course?.modules
   })
 
   const { currentLesson } = useCurrentCourse()
 
   useEffect(() => {
-    document.title = `Watching: ${currentLesson.title}`
+    api.get('/courses/1').then((response) => {
+      console.log(response.data)
+    })
+  }, [])
+
+  useEffect(() => {
+    if (currentLesson) {
+      document.title = `Watching: ${currentLesson.title}`
+    }
   }, [currentLesson])
 
   return (
@@ -36,16 +45,17 @@ export function Player() {
             <VideoPlayer />
           </div>
           <aside className="scrollbar-thin scrollbar-track-zinc-950 scrollbar-thumb-zinc-700 absolute bottom-0 right-0 top-0 w-80 divide-y-2 divide-zinc-900 overflow-y-scroll border-l border-zinc-700 bg-zinc-800">
-            {modules.map((module, index) => {
-              return (
-                <CourseModule
-                  key={crypto.randomUUID()}
-                  title={module.title}
-                  moduleIndex={index}
-                  lessonsAmount={module.lessons.length}
-                />
-              )
-            })}
+            {modules &&
+              modules.map((module, index) => {
+                return (
+                  <CourseModule
+                    key={crypto.randomUUID()}
+                    title={module.title}
+                    moduleIndex={index}
+                    lessonsAmount={module.lessons.length}
+                  />
+                )
+              })}
           </aside>
         </main>
       </div>

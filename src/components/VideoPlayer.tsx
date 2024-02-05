@@ -18,6 +18,10 @@ export function VideoPlayer() {
       setShowToast(false)
     }, 5000)
   }
+
+  if (!video) {
+    return null
+  }
   return (
     <div className="aspect-video w-full bg-zinc-900">
       <Player
