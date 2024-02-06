@@ -1,30 +1,51 @@
-# React + TypeScript + Vite
+# Video Player / Redux to Zustand
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+_A course video player application with the main focus of integrating with Redux and then migrating to Zustand_
 
-Currently, two official plugins are available:
+## Technologies used
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- Front-end built with React.js, TypeScript, and Tailwind CSS
+- State management initially implemented with Redux and later migrated to Zustand
+- Styling components with Radix and Tailwind
+- Axios for handling HTTP requests
 
-## Expanding the ESLint configuration
+## Services Used
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+- GitHub
+- Youtube
 
-- Configure the top-level `parserOptions` property like this:
+## System Features
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
-```
+- Video player functionality
+- Course navigation and playback controls
+- State management with Redux, later migrated to Zustand
+- Integration of Redux DevTools for debugging
+- Responsive design with Tailwind CSS
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+## Getting Started
+
+- Clone the repository.
+- Navigate to the project directory and install dependencies using `pnpm install`.
+- Start the development server with `pnpm run dev`.
+- Access the application through your browser.
+
+## How to use
+
+### Course video player
+
+![Screenshot of the course video player](/public/README/video_player.png)
+
+> You just got Rick Rolled 😁😅
+
+## Features
+
+- Course video playback
+- Seamless navigation through course content
+- Smooth state management with Redux, later migrated to Zustand
+- Integration with Redux DevTools for easier debugging
+
+## Authors
+
+Lucas Porfirio: [@lukeskw](https://github.com/lukeskw) [Linkedin](https://www.linkedin.com/in/lucas-porfirio-dev/)
+
+Follow me on GitHub and join our community! Thank you for visiting and happy coding!
