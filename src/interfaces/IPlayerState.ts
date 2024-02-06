@@ -4,7 +4,7 @@ export interface PlayerState {
   course: Course | null
   currentModuleIdx: number
   currentLessonIdx: number
-  isPending: boolean
+  isPending?: boolean
 }
 
 export interface PlayerStateZustand {
