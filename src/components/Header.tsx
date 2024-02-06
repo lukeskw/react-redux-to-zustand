@@ -1,11 +1,12 @@
-import { useCurrentCourse } from '../hooks/useCurrentCourse'
+// import { useCurrentCourse } from '../hooks/useCurrentCourse'
+import { useCurrentCourseZustand } from '../hooks/useCurrentCourseZustand'
 
 export function Header() {
   const {
     currentModule,
     currentLesson,
     isPending: isCourseLoading,
-  } = useCurrentCourse()
+  } = useCurrentCourseZustand()
 
   return (
     <div className="flex flex-col gap-2">

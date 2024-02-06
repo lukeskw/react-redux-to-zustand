@@ -1,8 +1,8 @@
 import { create } from 'zustand'
-import { PlayerState } from '../interfaces/IPlayerState'
+import { PlayerStateZustand } from '../interfaces/IPlayerState'
 import { api } from '../lib/axios'
 
-export const useStore = create<PlayerState>((set, get) => {
+export const useStore = create<PlayerStateZustand>((set, get) => {
   return {
     course: null,
     currentLessonIdx: 0,

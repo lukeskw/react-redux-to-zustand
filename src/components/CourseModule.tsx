@@ -1,9 +1,10 @@
-import { ChevronDown, Loader2 } from 'lucide-react'
+import { ChevronDown } from 'lucide-react'
 import { Lesson } from './Lesson'
 
 import * as Collapsible from '@radix-ui/react-collapsible'
-import { play } from '../store/slices/player'
-import { useCourse } from '../hooks/useCourse'
+// import { play } from '../store/slices/player'
+// import { useCourse } from '../hooks/useCourse'
+import { useCourseZustand } from '../hooks/useCourseZustand'
 
 interface ICourseModuleProps {
   title: string
@@ -22,8 +23,8 @@ export function CourseModule({
     currentModuleIdx,
     isOpen,
     setIsOpen,
-    appDispatch,
-  } = useCourse(moduleIndex)
+    play,
+  } = useCourseZustand(moduleIndex)
 
   return (
     <Collapsible.Root
@@ -54,7 +55,8 @@ export function CourseModule({
                   key={crypto.randomUUID()}
                   title={lesson.title}
                   duration={lesson.duration}
-                  onPlay={() => appDispatch(play([moduleIndex, lessonIndex]))}
+                  // onPlay={() => appDispatch(play([moduleIndex, lessonIndex]))}
+                  onPlay={() => play([moduleIndex, lessonIndex])}
                   isCurrent={isCurrent}
                 />
               )

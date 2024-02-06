@@ -3,26 +3,37 @@ import { Loader2, MessageCircle } from 'lucide-react'
 import { Header } from '../components/Header'
 import { VideoPlayer } from '../components/VideoPlayer'
 import { CourseModule } from '../components/CourseModule'
-import { useAppSelector } from '../store'
-import { useCurrentCourse } from '../hooks/useCurrentCourse'
+import { useStore } from '../zustand-store'
 import { useEffect } from 'react'
-import { loadCourseData } from '../store/slices/player'
+import { useCurrentCourseZustand } from '../hooks/useCurrentCourseZustand'
+// import { useAppSelector } from '../store'
+// import { useCurrentCourse } from '../hooks/useCurrentCourse'
+// import { useEffect } from 'react'
+// import { useCurrentCourse } from '../hooks/useCurrentCourse'
+// import { useAppSelector } from '../store'
+// import { loadCourseData } from '../store/slices/player'
 
 export function Player() {
-  const { modules, isCourseLoading } = useAppSelector((state) => {
-    const modules = state.player.course?.modules
-    const isCourseLoading = state.player.isPending
-    return {
-      modules,
-      isCourseLoading,
-    }
-  })
+  const { course, load, isPending } = useStore()
 
-  const { currentLesson, appDispatch } = useCurrentCourse()
+  // const { modules, isCourseLoading } = useAppSelector((state) => {
+  //   const modules = state.player.course?.modules
+  //   const isCourseLoading = state.player.isPending
+  //   return {
+  //     modules,
+  //     isCourseLoading,
+  //   }
+  // })
+
+  const { currentLesson } = useCurrentCourseZustand()
 
   useEffect(() => {
-    appDispatch(loadCourseData())
-  }, [appDispatch])
+    // appDispatch(loadCourseData())
+    load()
+  }, [
+    load,
+    // appDispatch
+  ])
 
   useEffect(() => {
     if (currentLesson) {
@@ -48,8 +59,8 @@ export function Player() {
             <VideoPlayer />
           </div>
           <aside className="absolute bottom-0 right-0 top-0 w-80 divide-y-2 divide-zinc-900 overflow-y-scroll border-l border-zinc-700 bg-zinc-800 scrollbar-thin scrollbar-track-zinc-950 scrollbar-thumb-zinc-700">
-            {modules && !isCourseLoading ? (
-              modules.map((module, index) => {
+            {course?.modules && !isPending ? (
+              course?.modules.map((module, index) => {
                 return (
                   <CourseModule
                     key={crypto.randomUUID()}

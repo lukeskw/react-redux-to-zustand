@@ -5,8 +5,15 @@ export interface PlayerState {
   currentModuleIdx: number
   currentLessonIdx: number
   isPending: boolean
+}
 
-  load?: () => Promise<void>
-  play?: ([moduleIdx, lessonIdx]: [number, number]) => void
-  next?: () => void
+export interface PlayerStateZustand {
+  course: Course | null
+  currentModuleIdx: number
+  currentLessonIdx: number
+  isPending: boolean
+
+  load: () => Promise<void>
+  play: ([moduleIdx, lessonIdx]: [number, number]) => void
+  next: () => void
 }

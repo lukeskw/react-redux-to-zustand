@@ -1,21 +1,26 @@
 import Player from 'react-player'
-import { next } from '../store/slices/player'
+// import { next } from '../store/slices/player'
 import { NextVideoToast } from './NextVideoToast'
 import { useState } from 'react'
-import { useCurrentCourse } from '../hooks/useCurrentCourse'
+// import { useCurrentCourse } from '../hooks/useCurrentCourse'
 import { Loader2 } from 'lucide-react'
+import { useCurrentCourseZustand } from '../hooks/useCurrentCourseZustand'
 
 export function VideoPlayer() {
   const [showToast, setShowToast] = useState(false)
 
-  const { currentLesson: video, appDispatch, isPending } = useCurrentCourse()
-
-  const isCourseLoading = isPending
+  // const { currentLesson: video, appDispatch, isPending } = useCurrentCourse()
+  const {
+    currentLesson: video,
+    isPending: isCourseLoading,
+    next,
+  } = useCurrentCourseZustand()
 
   function handlePlayNextVideo() {
     setShowToast(true)
     setTimeout(() => {
-      appDispatch(next())
+      // appDispatch(next())
+      next()
       setShowToast(false)
     }, 5000)
   }
