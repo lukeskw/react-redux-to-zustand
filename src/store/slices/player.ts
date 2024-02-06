@@ -1,9 +1,4 @@
-import {
-  PayloadAction,
-  createSlice,
-  createAsyncThunk,
-  isPending,
-} from '@reduxjs/toolkit'
+import { PayloadAction, createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import { PlayerState } from '../../interfaces/IPlayerState'
 import { api } from '../../lib/axios'
 
